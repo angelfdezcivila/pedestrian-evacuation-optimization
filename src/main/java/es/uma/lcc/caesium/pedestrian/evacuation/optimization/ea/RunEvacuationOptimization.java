@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
 
+import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonException;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
@@ -76,6 +77,10 @@ public class RunEvacuationOptimization {
 		PrintWriter file = new PrintWriter(STATS_FILENAME + args[1] + ".json");
 //		file.print(myEA.getStatistics().toJSON().toJson());
 		file.print(myEA.getStatistics().toJSONObject().toJson());
+
+		JsonArray genome = (JsonArray) myEA.getStatistics().toJSONObject().get("genome");
+		JsonArray fitness = (JsonArray) myEA.getStatistics().toJSONObject().get("fitness");
+		System.out.println("Tamaño: " + genome.size() + ";" + fitness.size());
 		file.close();
 	}
 }
