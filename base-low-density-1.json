@@ -1,0 +1,392 @@
+{
+  "gateways": [
+    
+  ],
+  "domains": [
+    {
+      "obstacles": [
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 8.0,
+              "y": 2.0
+            },
+            "width": 0.5,
+            "type": "RECTANGLE",
+            "height": 5.0
+          },
+          "name": "obstacle 1",
+          "description": "obstacle 1/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 34.0,
+              "y": 16.5
+            },
+            "width": 3.5,
+            "type": "RECTANGLE",
+            "height": 1.5
+          },
+          "name": "obstacle 2",
+          "description": "obstacle 2/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 14.5,
+              "y": 12.5
+            },
+            "width": 0.5,
+            "type": "RECTANGLE",
+            "height": 7.0
+          },
+          "name": "obstacle 3",
+          "description": "obstacle 3/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 32.5,
+              "y": 20.5
+            },
+            "width": 10.0,
+            "type": "RECTANGLE",
+            "height": 0.5
+          },
+          "name": "obstacle 4",
+          "description": "obstacle 4/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 24.5,
+              "y": 0.5
+            },
+            "width": 3.0,
+            "type": "RECTANGLE",
+            "height": 1.0
+          },
+          "name": "obstacle 5",
+          "description": "obstacle 5/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 21.5,
+              "y": 0.5
+            },
+            "width": 0.5,
+            "type": "RECTANGLE",
+            "height": 10.5
+          },
+          "name": "obstacle 6",
+          "description": "obstacle 6/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 33.0,
+              "y": 12.5
+            },
+            "width": 8.0,
+            "type": "RECTANGLE",
+            "height": 0.5
+          },
+          "name": "obstacle 7",
+          "description": "obstacle 7/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 24.5,
+              "y": 17.5
+            },
+            "width": 1.0,
+            "type": "RECTANGLE",
+            "height": 3.0
+          },
+          "name": "obstacle 8",
+          "description": "obstacle 8/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 31.0,
+              "y": 7.0
+            },
+            "width": 6.5,
+            "type": "RECTANGLE",
+            "height": 0.5
+          },
+          "name": "obstacle 9",
+          "description": "obstacle 9/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 18.0,
+              "y": 7.5
+            },
+            "width": 0.5,
+            "type": "RECTANGLE",
+            "height": 7.0
+          },
+          "name": "obstacle 10",
+          "description": "obstacle 10/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 4.0,
+              "y": 8.0
+            },
+            "width": 3.0,
+            "type": "RECTANGLE",
+            "height": 1.5
+          },
+          "name": "obstacle 11",
+          "description": "obstacle 11/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 33.0,
+              "y": 0.0
+            },
+            "width": 1.0,
+            "type": "RECTANGLE",
+            "height": 1.0
+          },
+          "name": "obstacle 12",
+          "description": "obstacle 12/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 31.5,
+              "y": 4.0
+            },
+            "width": 1.0,
+            "type": "RECTANGLE",
+            "height": 0.5
+          },
+          "name": "obstacle 13",
+          "description": "obstacle 13/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 40.5,
+              "y": 1.5
+            },
+            "width": 1.0,
+            "type": "RECTANGLE",
+            "height": 0.5
+          },
+          "name": "obstacle 14",
+          "description": "obstacle 14/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 14.5,
+              "y": 6.5
+            },
+            "width": 1.0,
+            "type": "RECTANGLE",
+            "height": 2.0
+          },
+          "name": "obstacle 15",
+          "description": "obstacle 15/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 4.0,
+              "y": 10.5
+            },
+            "width": 8.0,
+            "type": "RECTANGLE",
+            "height": 0.5
+          },
+          "name": "obstacle 16",
+          "description": "obstacle 16/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 10.0,
+              "y": 17.5
+            },
+            "width": 1.0,
+            "type": "RECTANGLE",
+            "height": 0.5
+          },
+          "name": "obstacle 17",
+          "description": "obstacle 17/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 0.0,
+              "y": 15.5
+            },
+            "width": 1.0,
+            "type": "RECTANGLE",
+            "height": 0.5
+          },
+          "name": "obstacle 18",
+          "description": "obstacle 18/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 41.0,
+              "y": 4.0
+            },
+            "width": 0.5,
+            "type": "RECTANGLE",
+            "height": 7.0
+          },
+          "name": "obstacle 19",
+          "description": "obstacle 19/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 0.5,
+              "y": 13.0
+            },
+            "width": 12.0,
+            "type": "RECTANGLE",
+            "height": 0.5
+          },
+          "name": "obstacle 20",
+          "description": "obstacle 20/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 45.0,
+              "y": 14.5
+            },
+            "width": 1.0,
+            "type": "RECTANGLE",
+            "height": 2.0
+          },
+          "name": "obstacle 21",
+          "description": "obstacle 21/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 44.0,
+              "y": 1.0
+            },
+            "width": 2.0,
+            "type": "RECTANGLE",
+            "height": 1.5
+          },
+          "name": "obstacle 22",
+          "description": "obstacle 22/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 25.0,
+              "y": 3.5
+            },
+            "width": 0.5,
+            "type": "RECTANGLE",
+            "height": 4.5
+          },
+          "name": "obstacle 23",
+          "description": "obstacle 23/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 3.0,
+              "y": 2.0
+            },
+            "width": 1.0,
+            "type": "RECTANGLE",
+            "height": 3.5
+          },
+          "name": "obstacle 24",
+          "description": "obstacle 24/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 1.5,
+              "y": 0.5
+            },
+            "width": 0.5,
+            "type": "RECTANGLE",
+            "height": 11.0
+          },
+          "name": "obstacle 25",
+          "description": "obstacle 25/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 18.5,
+              "y": 4.5
+            },
+            "width": 1.0,
+            "type": "RECTANGLE",
+            "height": 1.5
+          },
+          "name": "obstacle 26",
+          "description": "obstacle 26/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 40.0,
+              "y": 15.0
+            },
+            "width": 4.0,
+            "type": "RECTANGLE",
+            "height": 1.0
+          },
+          "name": "obstacle 27",
+          "description": "obstacle 27/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 46.0,
+              "y": 8.0
+            },
+            "width": 0.5,
+            "type": "RECTANGLE",
+            "height": 1.5
+          },
+          "name": "obstacle 28",
+          "description": "obstacle 28/29"
+        },
+        {
+          "shape": {
+            "bottomLeft": {
+              "x": 22.0,
+              "y": 15.5
+            },
+            "width": 1.0,
+            "type": "RECTANGLE",
+            "height": 4.0
+          },
+          "name": "obstacle 29",
+          "description": "obstacle 29/29"
+        }
+      ],
+      "name": "domain1",
+      "width": 47.5,
+      "id": 1,
+      "height": 22.0
+    }
+  ]
+}
