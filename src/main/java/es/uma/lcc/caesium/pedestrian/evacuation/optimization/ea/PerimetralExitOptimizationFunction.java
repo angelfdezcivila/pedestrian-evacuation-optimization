@@ -1,6 +1,9 @@
 package es.uma.lcc.caesium.pedestrian.evacuation.optimization.ea;
 
+import org.deeplearning4j.nn.modelimport.keras.KerasModelImport;
+import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +16,8 @@ import es.uma.lcc.caesium.ea.fitness.OptimizationSense;
 import es.uma.lcc.caesium.pedestrian.evacuation.optimization.Double2AccessDecoder;
 import es.uma.lcc.caesium.pedestrian.evacuation.optimization.ExitEvacuationProblem;
 import es.uma.lcc.caesium.pedestrian.evacuation.simulator.environment.Access;
+import org.nd4j.linalg.api.ndarray.INDArray;
+import org.nd4j.linalg.factory.Nd4j;
 
 
 /**
@@ -98,11 +103,62 @@ public class PerimetralExitOptimizationFunction extends ContinuousObjectiveFunct
 		TreeSet<Double> genes = individualToTreeSet (ind);
 		Double val = cache.get(genes);
 		if (val == null) {
-			val = eep.fitness (eep.simulate (decode (ind)));
-			cache.put(genes, val);
+			System.out.println("Puertas representadas con un float en el rango [0,1]:");
+			for (int i = 0; i < ind.getGenome().length(); i++) {
+				System.out.println("Gene: " + ind.getGenome().getGene(i));
+			}
+
+//			val = eep.fitness (eep.simulate (decode (ind)));
+            try {
+                val = FitnessFromPrediction(ind.getGenome());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            cache.put(genes, val);
 		}
 		
 		return val;
+	}
+
+	// Load the Keras model and tries to predict fitness
+	private double FitnessFromPrediction(Genotype genome) throws Exception {
+
+		//Se necesita la version 1 o 2 de keras
+//		String simpleMlp = new ClassPathResource("../../../neural_network.h5").getFile().getPath(); // no funciona
+		String simpleMlp = new File("neural_network.h5").getAbsolutePath();
+		MultiLayerNetwork model = KerasModelImport.
+				importKerasSequentialModelAndWeights(simpleMlp, false);
+
+//		INDArray features = Nd4j.zeros(1, genome.length()); // Para que sea una matriz de 1xlongitud_genotipo, contiene un único array de la longitud del genotipo
+		double[][] genes = new double[1][genome.length()];
+		for (int i = 0; i < genome.length(); i++) {
+//			System.out.println("Gene: " + (double)genome.getGene(i));
+//			features.putScalar(new int[]{i}, (double)genome.getGene(i)); // el transpaso hace que los decimales varien, y no se por qué
+//			System.out.println("Gene readed: " + features.getDouble(i));
+			genes[0][i] = (double)genome.getGene(i);
+		}
+		INDArray features = Nd4j.create(genes);
+		// Para testear que la conversión a INDArray funciona correctamente
+//		for (int i = 0; i < genome.length(); i++) {
+//			System.out.println("Gene readed: " + features.getDouble(i));
+//		}
+
+		double prediction = model.output(features).getDouble(0);
+		System.out.println("Puertas: " + features.toString());
+		System.out.println("Fitness: " + prediction);
+
+		return prediction;
+
+
+//		String simpleMlp = new File("neural_network").getAbsolutePath();
+//		System.out.println(simpleMlp);
+//		try(SavedModelBundle model = SavedModelBundle.load(simpleMlp, "serve")){
+//			Tensor tensor = model.session().runner().fetch("xy").feed("x", Tensor.create(5.0f)).feed("y", Tensor.create(2.0f)).run().get(0);
+//			System.out.println("valor Tensor: " + tensor.floatValue());
+//			return tensor.floatValue();
+//		}
+
+//		return 0;
 	}
 	
 	/**
