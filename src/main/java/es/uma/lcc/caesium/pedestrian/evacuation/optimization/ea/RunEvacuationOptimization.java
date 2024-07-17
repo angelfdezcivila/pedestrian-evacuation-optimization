@@ -74,7 +74,8 @@ public class RunEvacuationOptimization {
 								myEA.getStatistics().getBest(i).getFitness());
 		}
 		PrintWriter file = new PrintWriter(STATS_FILENAME + args[1] + ".json");
-		file.print(myEA.getStatistics().toJSON().toJson());
+//		file.print(myEA.getStatistics().toJSON().toJson());
+		file.print(myEA.getStatistics().toJSONObject().toJson());
 		file.close();
 	}
 }
