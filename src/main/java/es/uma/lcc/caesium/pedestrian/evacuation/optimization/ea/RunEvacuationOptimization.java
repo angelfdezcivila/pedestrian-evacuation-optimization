@@ -29,7 +29,7 @@ public class RunEvacuationOptimization {
 	/**
 	 * stats filename prefix
 	 */
-	private static final String STATS_FILENAME = "ea-stats-";
+	private static final String STATS_FILENAME = "ea-model(18447)-stats-";
 
 	/**
 	 * Main method
@@ -75,12 +75,12 @@ public class RunEvacuationOptimization {
 								myEA.getStatistics().getBest(i).getFitness());
 		}
 		PrintWriter file = new PrintWriter(STATS_FILENAME + args[1] + ".json");
-//		file.print(myEA.getStatistics().toJSON().toJson());
-		file.print(myEA.getStatistics().toJSONObject().toJson());
+		file.print(myEA.getStatistics().toJSON().toJson());
+//		file.print(myEA.getStatistics().toJSONObject().toJson());
 
-		JsonArray genome = (JsonArray) myEA.getStatistics().toJSONObject().get("genome");
-		JsonArray fitness = (JsonArray) myEA.getStatistics().toJSONObject().get("fitness");
-		System.out.println("Tamaño: " + genome.size() + ";" + fitness.size());
+//		JsonArray genome = (JsonArray) myEA.getStatistics().toJSONObject().get("genome");
+//		JsonArray fitness = (JsonArray) myEA.getStatistics().toJSONObject().get("fitness");
+//		System.out.println("Tamaño: " + genome.size() + ";" + fitness.size());
 		file.close();
 	}
 }

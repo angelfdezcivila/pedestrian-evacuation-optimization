@@ -103,10 +103,10 @@ public class PerimetralExitOptimizationFunction extends ContinuousObjectiveFunct
 		TreeSet<Double> genes = individualToTreeSet (ind);
 		Double val = cache.get(genes);
 		if (val == null) {
-			System.out.println("Puertas representadas con un float en el rango [0,1]:");
-			for (int i = 0; i < ind.getGenome().length(); i++) {
-				System.out.println("Gene: " + ind.getGenome().getGene(i));
-			}
+//			System.out.println("Puertas representadas con un float en el rango [0,1]:");
+//			for (int i = 0; i < ind.getGenome().length(); i++) {
+//				System.out.println("Gene: " + ind.getGenome().getGene(i));
+//			}
 
 //			val = eep.fitness (eep.simulate (decode (ind)));
             try {
@@ -124,8 +124,8 @@ public class PerimetralExitOptimizationFunction extends ContinuousObjectiveFunct
 	private double FitnessFromPrediction(Genotype genome) throws Exception {
 
 		//Se necesita la version 1 o 2 de keras
-//		String simpleMlp = new ClassPathResource("../../../neural_network.h5").getFile().getPath(); // no funciona
-		String simpleMlp = new File("neural_network.h5").getAbsolutePath();
+//		String simpleMlp = new ClassPathResource("../../../neural_network_750V1(198582).h5").getFile().getPath(); // no funciona
+		String simpleMlp = new File("neural_network_750(18447).h5").getAbsolutePath();
 		MultiLayerNetwork model = KerasModelImport.
 				importKerasSequentialModelAndWeights(simpleMlp, false);
 
@@ -144,8 +144,8 @@ public class PerimetralExitOptimizationFunction extends ContinuousObjectiveFunct
 //		}
 
 		double prediction = model.output(features).getDouble(0);
-		System.out.println("Puertas: " + features.toString());
-		System.out.println("Fitness: " + prediction);
+//		System.out.println("Puertas: " + features.toString());
+//		System.out.println("Fitness: " + prediction);
 
 		return prediction;
 
