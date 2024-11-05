@@ -78,6 +78,8 @@ public class RunEvacuationOptimization {
 		file.print(myEA.getStatistics().toJSON().toJson());
 //		file.print(myEA.getStatistics().toJSONObject().toJson());
 
+		System.out.println("EA terminado");
+
 //		JsonArray genome = (JsonArray) myEA.getStatistics().toJSONObject().get("genome");
 //		JsonArray fitness = (JsonArray) myEA.getStatistics().toJSONObject().get("fitness");
 //		System.out.println("Tamaño: " + genome.size() + ";" + fitness.size());

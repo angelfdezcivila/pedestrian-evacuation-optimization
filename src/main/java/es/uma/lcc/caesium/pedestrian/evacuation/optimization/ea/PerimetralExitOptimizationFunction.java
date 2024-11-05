@@ -4,10 +4,7 @@ import org.deeplearning4j.nn.modelimport.keras.KerasModelImport;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 import es.uma.lcc.caesium.ea.base.Genotype;
 import es.uma.lcc.caesium.ea.base.Individual;
@@ -125,17 +122,22 @@ public class PerimetralExitOptimizationFunction extends ContinuousObjectiveFunct
 
 		//Se necesita la version 1 o 2 de keras
 //		String simpleMlp = new ClassPathResource("../../../neural_network_750V1(198582).h5").getFile().getPath(); // no funciona
-		String simpleMlp = new File("neural_network_750(18447).h5").getAbsolutePath();
+//		String simpleMlp = new File("neural_network_750(18447).h5").getAbsolutePath();
+//		String simpleMlp = new File("neural_network_750V1(198582).h5").getAbsolutePath();
+		String simpleMlp = new File("neural_network_750V2(198582).h5").getAbsolutePath();
 		MultiLayerNetwork model = KerasModelImport.
 				importKerasSequentialModelAndWeights(simpleMlp, false);
 
 //		INDArray features = Nd4j.zeros(1, genome.length()); // Para que sea una matriz de 1xlongitud_genotipo, contiene un único array de la longitud del genotipo
 		double[][] genes = new double[1][genome.length()];
+		List<Double> sortedGenome = SortedGenotype(genome);
 		for (int i = 0; i < genome.length(); i++) {
 //			System.out.println("Gene: " + (double)genome.getGene(i));
 //			features.putScalar(new int[]{i}, (double)genome.getGene(i)); // el transpaso hace que los decimales varien, y no se por qué
 //			System.out.println("Gene readed: " + features.getDouble(i));
-			genes[0][i] = (double)genome.getGene(i);
+
+//			genes[0][i] = (double)genome.getGene(i);
+			genes[0][i] = sortedGenome.get(i);
 		}
 		INDArray features = Nd4j.create(genes);
 		// Para testear que la conversión a INDArray funciona correctamente
@@ -149,7 +151,6 @@ public class PerimetralExitOptimizationFunction extends ContinuousObjectiveFunct
 
 		return prediction;
 
-
 //		String simpleMlp = new File("neural_network").getAbsolutePath();
 //		System.out.println(simpleMlp);
 //		try(SavedModelBundle model = SavedModelBundle.load(simpleMlp, "serve")){
@@ -160,7 +161,16 @@ public class PerimetralExitOptimizationFunction extends ContinuousObjectiveFunct
 
 //		return 0;
 	}
-	
+
+	private List<Double> SortedGenotype(Genotype genome) {
+		List<Double> sortedGenome = new ArrayList<>(genome.length());
+		for (int i = 0; i < genome.length(); i++) {
+			sortedGenome.add((double)genome.getGene(i));
+		}
+		sortedGenome.sort(Double::compareTo);
+		return sortedGenome;
+	}
+
 	/**
 	 * Transforms an individual's genome into a tree set (because genome ordering is irrelevant
 	 * when it comes to compare solutions).
