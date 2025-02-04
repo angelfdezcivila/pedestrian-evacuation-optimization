@@ -25,11 +25,14 @@ public class RunEvacuationOptimization {
 	/**
 	 * environment filename prefix
 	 */
-	private static final String ENVIRONMENT_FILENAME = "base-";
+//	private static final String ENVIRONMENT_FILENAME = "base-";
+	private static final String ENVIRONMENT_FILENAME = "afterTFG/enviroments/base-";
 	/**
 	 * stats filename prefix
 	 */
-	private static final String STATS_FILENAME = "ea-model(18447)-stats-";
+//	private static final String STATS_FILENAME = "ea-model(18447)-stats-";
+	private static final String STATS_FILENAME = "ea-stats-";
+	private static final String STATS_FILENAME_DOORS = "_1Door";
 
 	/**
 	 * Main method
@@ -38,14 +41,20 @@ public class RunEvacuationOptimization {
 	 * @throws IOException if files cannot be read/written
 	 */
 	public static void main(String[] args) throws JsonException, IOException {
+		int numExits = Integer.parseInt(args[2]);
+
 		// set US locale
 		Locale.setDefault(Locale.US);
 
 		EAConfiguration conf;
 		if (args.length < 4) {
-			System.out.println ("Required parameters: <ea-configuration-file> <environment-name> <num-exits> <simulation-configuration>");
-			System.out.println ("\nNote that the environment configuration file will be sought as " + ENVIRONMENT_FILENAME + "<environment-name>.json,");
-			System.out.println ("and the statistics will be dumped to a file named " + STATS_FILENAME + "<environment-name>.json");
+			System.out.println ("Required parameters: <ea-configuration-trainingDataFile> <environment-name> <num-exits> <simulation-configuration>");
+			System.out.println ("\nNote that the environment configuration trainingDataFile will be sought as " + ENVIRONMENT_FILENAME + "<environment-name>.json,");
+//			System.out.println ("and the statistics will be dumped to a trainingDataFile named " + STATS_FILENAME + "<environment-name>.json");
+			if(numExits == 1)
+				System.out.println ("and the statistics will be dumped to a trainingDataFile named " + STATS_FILENAME + "<environment-name>_" + numExits + "Door.json");
+			else
+				System.out.println ("and the statistics will be dumped to a trainingDataFile named " + STATS_FILENAME + "<environment-name>_" + numExits + "Doors.json");
 			System.exit(1);
 		}
 		
@@ -59,11 +68,17 @@ public class RunEvacuationOptimization {
 		myEA.setVerbosityLevel(1);
 		
 		// Configure the problem
+//		String fileName = STATS_FILENAME + args[1] + STATS_FILENAME_DOORS;
+		String fileName = STATS_FILENAME + args[1] + "_" + args[2] + "Door";
+		if(numExits != 1)
+			fileName = STATS_FILENAME + args[1] + "_" + args[2] + "Doors";
+
 	    Environment environment = Environment.fromFile(ENVIRONMENT_FILENAME + args[1] + ".json");
 		SimulationConfiguration simulationConf = SimulationConfiguration.fromFile(args[3]);
-	    int numExits = Integer.parseInt(args[2]);
+//	    int numExits = Integer.parseInt(args[2]);
 	    ExitEvacuationProblem eep = new ExitEvacuationProblem (environment, numExits, simulationConf);
-		myEA.setObjectiveFunction(new PerimetralExitOptimizationFunction(eep));
+		myEA.setObjectiveFunction(new PerimetralExitOptimizationFunction(eep));	// OF original de Pepe (es en caso de que eep ya tenga el entorno)
+//		myEA.setObjectiveFunction(new PerimetralExitOptimizationFunction(eep, "model-" + fileName, args[4]));	// En caso de que el entorno no sea necesario, en la configuración carga el nombre del modelo
 		myEA.getStatistics().setDiversityMeasure(new CircularSetDiversity(1.0));
 		System.out.println(eep);
 		
@@ -74,15 +89,30 @@ public class RunEvacuationOptimization {
 								String.format("%.2f", myEA.getStatistics().getTime(i)) + "s\t" +
 								myEA.getStatistics().getBest(i).getFitness());
 		}
-		PrintWriter file = new PrintWriter(STATS_FILENAME + args[1] + ".json");
-		file.print(myEA.getStatistics().toJSON().toJson());
-//		file.print(myEA.getStatistics().toJSONObject().toJson());
+//		PrintWriter trainingDataFile = new PrintWriter("afterTFG/trainingData/" + fileName + ".json");
+		PrintWriter trainingDataFile = new PrintWriter("afterTFG/trainingData/separatedByRun/" + fileName + ".json");
+		PrintWriter eaDataFile = new PrintWriter("afterTFG/eaData/" + fileName + ".json");
+//		PrintWriter modelData = new PrintWriter("afterTFG/modelData/model-" + fileName + ".json");
+//		trainingDataFile.print(myEA.getStatistics().toJSON().toJson());		// El JSON por defecto de Pepe Gallardo
+		JsonArray jsonArray = myEA.getStatistics().toJSON();
+		eaDataFile.print(jsonArray.toJson());	//El JSON para el entrenamiento del modelo subrogado
+//		JsonObject jsonObject = myEA.getStatistics().toJSONObject();
+		jsonArray = myEA.getStatistics().toJSONObjectSeparatedByRuns(); //TODO: El otro proyecto necesita compilar, además de que es necesario comprobar si funciona
+		trainingDataFile.print(jsonArray.toJson());	//El JSON para el entrenamiento del modelo subrogado
+
+		/** Para saber cuantos genomas hay en toda la ejecución. Solo funciona poara el fichero con los listados genome y fitness directamente
+		int numGenomes = 0;
+		for (int i=0; i<numruns; i++) {
+			JsonObject currentRun = (JsonObject) jsonArray.get(i);
+			JsonObject rundata = (JsonObject) ((JsonArray) currentRun.get("rundata")).get(0);
+			numGenomes += ((JsonArray) rundata.get("genome")).size();
+		}
+		 System.out.println("Tamaño array genomas: " + numGenomes);
+		 */
 
 		System.out.println("EA terminado");
 
-//		JsonArray genome = (JsonArray) myEA.getStatistics().toJSONObject().get("genome");
-//		JsonArray fitness = (JsonArray) myEA.getStatistics().toJSONObject().get("fitness");
-//		System.out.println("Tamaño: " + genome.size() + ";" + fitness.size());
-		file.close();
+		trainingDataFile.close();
+		eaDataFile.close();
 	}
 }

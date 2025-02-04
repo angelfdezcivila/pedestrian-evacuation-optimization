@@ -54,8 +54,10 @@ public class PerimetralExitOptimizationFunction extends ContinuousObjectiveFunct
 	 * used to round off location values
 	 */
 	private static final double FACTOR = 1.0 / EXIT_PRECISION;
-	
-		
+
+	private String _modelName;
+	private String _folderModel;
+
 	/**
 	 * Basic constructor
 	 * @param eep the evacuation problem
@@ -67,6 +69,12 @@ public class PerimetralExitOptimizationFunction extends ContinuousObjectiveFunct
 		this.eep = eep;
 		decoder = new Double2AccessDecoder(eep);
 		cache = null;
+	}
+
+	public PerimetralExitOptimizationFunction(ExitEvacuationProblem eep, String modelName, String folderModel) {
+		this(eep);
+		_modelName = modelName;
+		_folderModel = folderModel;
 	}
 	
 	@Override
@@ -105,9 +113,9 @@ public class PerimetralExitOptimizationFunction extends ContinuousObjectiveFunct
 //				System.out.println("Gene: " + ind.getGenome().getGene(i));
 //			}
 
-//			val = eep.fitness (eep.simulate (decode (ind)));
+			val = eep.fitness (eep.simulate (decode (ind)));
             try {
-                val = FitnessFromPrediction(ind.getGenome());
+//                val = FitnessFromPrediction(ind.getGenome());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -121,10 +129,18 @@ public class PerimetralExitOptimizationFunction extends ContinuousObjectiveFunct
 	private double FitnessFromPrediction(Genotype genome) throws Exception {
 
 		//Se necesita la version 1 o 2 de keras
+		/* PARA EL TFG
 //		String simpleMlp = new ClassPathResource("../../../neural_network_750V1(198582).h5").getFile().getPath(); // no funciona
 //		String simpleMlp = new File("neural_network_750(18447).h5").getAbsolutePath();
 //		String simpleMlp = new File("neural_network_750V1(198582).h5").getAbsolutePath();
 		String simpleMlp = new File("neural_network_750V2(198582).h5").getAbsolutePath();
+		 */
+//		String simpleMlp = new ClassPathResource("../../../neural_network_750V1(198582).h5").getFile().getPath(); // no funciona
+//		String simpleMlp = new File("neural_network_750(18447).h5").getAbsolutePath();
+//		String simpleMlp = new File("neural_network_750V1(198582).h5").getAbsolutePath();
+
+		// A posteriori del TFG
+		String simpleMlp = new File(_folderModel + _modelName + ".h5").getAbsolutePath();
 		MultiLayerNetwork model = KerasModelImport.
 				importKerasSequentialModelAndWeights(simpleMlp, false);
 

@@ -1,0 +1,11 @@
+{
+	"algorithm": "ea",
+	"exits": 6,
+	"simulation": "afterTFG/simulation.json",
+	"experiments": [ 
+		{
+			"basename": "office",
+			"num": 8
+		}
+	] 
+}

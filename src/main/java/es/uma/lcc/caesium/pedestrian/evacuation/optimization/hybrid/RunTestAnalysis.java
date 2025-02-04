@@ -29,7 +29,8 @@ public class RunTestAnalysis {
 	/**
 	 * environment filename prefix
 	 */
-	private static final String ENVIRONMENT_FILENAME = "base-";
+//	private static final String ENVIRONMENT_FILENAME = "base-";
+	private static final String ENVIRONMENT_FILENAME = "afterTFG/enviroments/base-";
 	/**
 	 * stats filename prefix
 	 */
@@ -48,6 +49,8 @@ public class RunTestAnalysis {
 	 * @throws IOException if there is an error reading data
 	 */
 	public static void main(String[] args) throws JsonException, IOException {
+		int numExits = Integer.parseInt(args[2]);
+
 		// set US locale
 		Locale.setDefault(Locale.US);
 
@@ -57,12 +60,15 @@ public class RunTestAnalysis {
 			System.out.println ("\nNote that: ");
 			System.out.println ("\t- the EA configuration file will be sought as <configuration-name>.json,");
 			System.out.println ("\t- the environment configuration file will be sought as " + ENVIRONMENT_FILENAME + "<environment-name>.json,");
-			System.out.println ("\t- the statistics will be dumped to a file named <configuration-name>" + STATS_FILENAME + "<environment-name>-<num-exits>.json");
+			if (numExits == 1)
+				System.out.println ("\t- the statistics will be dumped to a file named <configuration-name>" + STATS_FILENAME + "<environment-name>_" + args[2] + "Door.json");
+			else
+				System.out.println ("\t- the statistics will be dumped to a file named <configuration-name>" + STATS_FILENAME + "<environment-name>_" + args[2] + "Doors.json");
 			System.exit(1);
 		}
 				
 		// Configure the EA
-		FileReader reader = new FileReader(args[0] + ".json");
+		FileReader reader = new FileReader("afterTFG/" + args[0] + ".json");
 		conf = new EAConfiguration((JsonObject) Jsoner.deserialize(reader));
 		int numruns = conf.getNumRuns();
 		long maxevals = conf.getIslandConfiguration(0).getMaxEvaluations();
@@ -72,14 +78,20 @@ public class RunTestAnalysis {
 		// Configure the problem
 	    Environment environment = Environment.fromFile(ENVIRONMENT_FILENAME + args[1] + ".json");
 		SimulationConfiguration simulationConf = SimulationConfiguration.fromFile(args[3]);
-	    int numExits = Integer.parseInt(args[2]);
+//	    int numExits = Integer.parseInt(args[2]);
 	    ExitEvacuationProblem eep = new ExitEvacuationProblem (environment, numExits, simulationConf);
 	    PerimetralExitOptimizationFunction peof = new PerimetralExitOptimizationFunction(eep);
 
 		//System.out.println(eep);
 		System.out.println(simulationConf);
 		
-		FileReader statsFile = new FileReader(args[0] + STATS_FILENAME + args[1] + "-" + args[2] + ".json");
+//		FileReader statsFile = new FileReader(args[0] + STATS_FILENAME + args[1] + "-" + args[2] + ".json");
+		String statsFileName = args[0] + STATS_FILENAME + args[1] + "_" + args[2] + "Door";
+		if(numExits != 1)
+			statsFileName = args[0] + STATS_FILENAME + args[1] + "_" + args[2] + "Doors";
+
+		FileReader statsFile = new FileReader("afterTFG/eaData/" + statsFileName + ".json");
+//		FileReader statsFile = new FileReader("afterTFG/modelData/" + statsFileName + ".json");
 		JsonArray stats = (JsonArray) Jsoner.deserialize(statsFile);
 		statsFile.close();
 		
@@ -122,7 +134,11 @@ public class RunTestAnalysis {
 		}
 
 		// Analyze the best solutions more in depth
-		PrintWriter solsim = new PrintWriter(args[0] + SIMULATIONS_FILENAME + args[1] + "-" + args[2] + ".csv");
+//		PrintWriter solsim = new PrintWriter(args[0] + SIMULATIONS_FILENAME + args[1] + "-" + args[2] + ".csv");
+		String simulationsFileName = args[0] + SIMULATIONS_FILENAME + args[1] + "-" + args[2];
+
+		PrintWriter solsim = new PrintWriter("afterTFG/simulationTests/EA/" + simulationsFileName + ".csv");
+//		PrintWriter solsim = new PrintWriter("afterTFG/simulationTests/Model/" + simulationsFileName + ".csv");
 		final int NUMSIMS = 1000;
 		solsim.print("run");
 		for (int j=0; j<NUMSIMS; j++)

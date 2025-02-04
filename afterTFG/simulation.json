@@ -1,0 +1,31 @@
+{
+	"numSimulations" : 25,
+    "simulator": {
+        "timeLimit": 60,
+        "simulatorType" : "CA",
+        "cellularAutomatonParameters": {
+            "cellDimension": 0.5,
+            "neighborhood": "Moore",
+            "floorField": "DijkstraStaticMoore"
+        }
+    },
+    "crowd": {
+        "numPedestrians": [
+            50,
+            50
+        ],
+        "pedestrianReferenceVelocity": 0.7692307692307692,
+        "attractionBias": [
+            4,
+            4
+        ],
+        "crowdRepulsion": [
+            0,
+            0
+        ],
+        "velocityFactor": [
+            1,
+            1
+        ]
+    }
+}
